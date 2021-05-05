@@ -1,0 +1,143 @@
+﻿@model Lyric_search.Model.Lyric
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" type="text/css" href="sandstone.css" />
+<script src="~/LyricScript.js"></script>
+<link rel="stylesheet" type="text/css" href="~/LyricStyle.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+
+<body>
+
+    <div class="jumbotron">
+        <h1 class="display-3"> Search Lyrics</h1>
+        <div class="videoblock">
+            <iframe src="https://www.youtube.com/embed/_pLO4jFDeIc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+            <iframe src="https://www.youtube.com/embed/JGwWNGJdvx8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+            <iframe src="https://www.youtube.com/embed/YTaWayUE5XA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+            <iframe src="https://www.youtube.com/embed/Lp2qcCrdBLA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+            <iframe src="https://www.youtube.com/embed/d_HlPboLRL8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+            <iframe src="https://www.youtube.com/embed/vRdMnXc6Yag" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+        </div>
+        <div id="form">
+
+        </div>
+
+        <img src="https://purepng.com/public/uploads/large/purepng.com-music-iconsymbolsiconsapple-iosiosios-8-iconsios-8-721522596085b6osz.png" align="left" width="145" height="145" />
+    </div>
+
+
+    <div class="container">
+
+        <div class="card mb-3">
+            <h3 id="card-header"></h3>
+            <div class="card-body">
+                <h5 class="card-title"> Artist: @Model.Artist</h5>
+                <h6 class="card-subtitle text-muted">Track: @Model.lyric</h6>
+            </div>
+
+
+            <iframe src="https://open.spotify.com/embed/track/@Model.VideoUrl" width="955" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+
+
+            <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div id="test">
+                </div>
+                <ul class="list-group list-group-flush">
+                </ul>
+                <div class="card-body">
+                    <a href="https://sv.wikipedia.org/wiki/@Model.Artist.ToLower()" class="card-link">Discover @Model.Artist</a>
+                    <a href="https://sv.wikipedia.org/wiki/@Model.Artist/@Model.lyric" class="card-link">About the track</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Searched: @Model.date
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+   
+    <button>Hide list</button>
+    <div id="searches"></div>
+
+
+
+</body>
+
+<script>
+
+    SearchLyric()
+    FetchData()
+    Latest()
+   
+
+
+  function SearchLyric() {
+
+    fetch("/_Create/",
+        {
+            method: "GET",
+        })
+        .then(res => res.text())
+        .then(html =>
+            document.getElementById("form").innerHTML = html);
+
+    }
+
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("#searches").toggle();
+        });
+    });
+
+    function Latest() {
+
+        fetch("/Latest/",
+            {
+                method: "GET",
+            })
+            .then(res => res.text())
+            .then(html =>
+                document.getElementById("searches").innerHTML = html);
+
+    }
+
+    function appendData(data) {
+    var mainContainer = document.getElementById("test");
+
+    var div = document.createElement("div");
+    div.innerHTML = data.lyrics;
+    mainContainer.appendChild(div);
+
+
+}
+
+function FetchData() {
+    fetch('https://api.lyrics.ovh/v1/@Model.Artist/@Model.lyric')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            appendData(data);
+            console.log(data);
+        })
+        .catch(function (err) {
+            console.log('error: ' + err);
+
+        });
+
+}
+
+
+
+
+
+</script>

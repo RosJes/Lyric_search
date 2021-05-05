@@ -1,0 +1,34 @@
+﻿@model Lyric_search.Model.Lyric[]
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" type="text/css" href="sandstone.css" />
+<script src="~/LyricScript.js"></script>
+<link rel="stylesheet" type="text/css" href="~/LyricStyle.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+    
+
+
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+
+        <div class="d-flex w-100 justify-content-between">
+
+            <h5 class="mb-1">@item.Artist</h5>
+            <small>@item.date</small>
+        </div>
+        <iframe src="https://open.spotify.com/embed/track/@item.VideoUrl" width="426" height="160" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        <small>@item.lyric</small>
+    </a>
+        
+    }
+
+
+</div>
