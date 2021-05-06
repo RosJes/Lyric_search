@@ -7,6 +7,10 @@ namespace Lyric_search.Model
 {
     public class LyricService
     {
+
+
+
+
         List<Lyric> _requests = new List<Lyric> {
 
         new Lyric{ Artist="Toto",lyric="Africa",VideoUrl="2374M0fQpWi3dLnB54qaLX",date=DateTime.Now}
@@ -40,7 +44,8 @@ namespace Lyric_search.Model
                 Artist = request.Artist.ToUpper(),
                 lyric = request.lyric.ToUpper(),
                 date = DateTime.Now,
-                VideoUrl = _videos.Where(o => o.lyric.ToUpper() == request.lyric.ToUpper()&& o.Artist.ToUpper()==request.Artist.ToUpper()).Select(o => o.VideoUrl).FirstOrDefault()
+                VideoUrl = _videos.Where(o => o.lyric.ToUpper() == request.lyric.ToUpper() && o.Artist.ToUpper() == request.Artist.ToUpper()).Select(o => o.VideoUrl).FirstOrDefault(),
+              
 
 
             }) ; 

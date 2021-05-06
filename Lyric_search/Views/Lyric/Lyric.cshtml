@@ -70,6 +70,7 @@
 
 
 
+ 
 </body>
 
 <script>
@@ -77,7 +78,7 @@
     SearchLyric()
     FetchData()
     Latest()
-   
+
 
 
   function SearchLyric() {
@@ -113,12 +114,16 @@
     function appendData(data) {
     var mainContainer = document.getElementById("test");
 
-    var div = document.createElement("div");
-    div.innerHTML = data.lyrics;
-    mainContainer.appendChild(div);
+        var div = document.createElement("div");
+
+        div.innerHTML = data;
 
 
-}
+     mainContainer.appendChild(div);
+
+
+    }
+   
 
 function FetchData() {
     fetch('https://api.lyrics.ovh/v1/@Model.Artist/@Model.lyric')
@@ -126,12 +131,23 @@ function FetchData() {
             return response.json();
         })
         .then(function (data) {
-            appendData(data);
+
+            if (data.lyrics == undefined) {
+              
+              appendData(data.error);
+
+           }
+            else {
+                
+                appendData(data.lyrics);
+              
+            }
+
             console.log(data);
         })
         .catch(function (err) {
-            console.log('error: ' + err);
 
+          console.log('error: ' + err);
         });
 
 }

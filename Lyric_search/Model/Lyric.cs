@@ -12,5 +12,6 @@ namespace Lyric_search.Model
         public string lyric { get; set; }
         public DateTime date{ get; set; }
         public string VideoUrl{ get; set; }
+        public bool IsLegit { get; set; }
     }
 }
